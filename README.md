@@ -16,5 +16,9 @@ Thus, I have created a Discord bot that pings a channel in my private Discord se
 
 ## Usage
 WIP
+
 ## Instructions for End User
+WIP
+
+## Backtesting
 WIP
