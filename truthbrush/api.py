@@ -1,3 +1,6 @@
+# Most of the functionality of api.py is implemented by the Stanford Internet Observatory
+# I have changed the pull_statuses function to suit my needs
+
 from time import sleep
 from typing import Any, Iterator, List, Optional
 from loguru import logger
