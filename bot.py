@@ -4,6 +4,7 @@ from truthbrush.api import Api
 from dotenv import load_dotenv
 import os
 from pathlib import Path
+from random import randint
 
 load_dotenv("secret.env")
 
@@ -11,7 +12,7 @@ DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
 CHANNEL_ID = int(os.getenv("CHANNEL_ID"))
 
 TRUTH_USERNAME = "realDonaldTrump"
-CHECK_INTERVAL = 60
+CHECK_INTERVAL = 300
 
 api = Api()
 last_post_id = None
