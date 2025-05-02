@@ -444,6 +444,8 @@ class Api:
 
                 yield post
 
+            sleep(300)
+
     def get_auth_id(self, username: str, password: str) -> str:
         """Logs in to Truth account and returns the session token"""
         url = BASE_URL + "/oauth/token"

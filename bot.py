@@ -12,7 +12,6 @@ DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
 CHANNEL_ID = int(os.getenv("CHANNEL_ID"))
 
 TRUTH_USERNAME = "realDonaldTrump"
-CHECK_INTERVAL = 300
 
 api = Api()
 last_post_id = None
@@ -49,6 +48,6 @@ async def check_for_new_truths():
         except Exception as e:
             print(f"Error fetching post: {e}")
 
-        await asyncio.sleep(CHECK_INTERVAL)
+        await asyncio.sleep(randint(300, 600))
 
 client.run(DISCORD_TOKEN)
