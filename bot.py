@@ -8,7 +8,7 @@ from pathlib import Path
 load_dotenv("secret.env")
 
 DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
-CHANNEL_ID = os.getenv("CHANNEL_ID")
+CHANNEL_ID = int(os.getenv("CHANNEL_ID"))
 
 TRUTH_USERNAME = "realDonaldTrump"
 CHECK_INTERVAL = 60

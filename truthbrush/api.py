@@ -12,7 +12,7 @@ import logging
 import os
 from dotenv import load_dotenv
 
-load_dotenv()  # take environment variables from .env.
+load_dotenv("secret.env") 
 
 logging.basicConfig(
     level=(
