@@ -3,7 +3,6 @@ import asyncio
 from truthbrush.api import Api
 from dotenv import load_dotenv
 import os
-from pathlib import Path
 from random import randint
 
 load_dotenv("secret.env")
