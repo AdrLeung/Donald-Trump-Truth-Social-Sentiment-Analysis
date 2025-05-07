@@ -39,7 +39,11 @@ async def check_for_new_truths():
             if posts:
                 latest_post = posts[0]
                 if latest_post["id"] != last_post_id:
-                    await channel.send(latest_post["url"])
+                    embed = discord.Embed(title = "New Post", url = latest_post["url"], description = latest_post["content"])
+                    embed.set_author(name = "Donald J. Trump", url = "https://truthsocial.com/@realDonaldTrump")
+
+                    await channel.send(embed=embed)
+
                     print(f"Posted new Truth: {latest_post['url']}")
                     last_post_id = latest_post["id"]
                 else:
