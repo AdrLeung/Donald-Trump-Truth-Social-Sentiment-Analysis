@@ -30,7 +30,7 @@ Will be updated as trades occur.
 
 ## TODO
 - Figure out how I will perform sentiment analysis on a Truth Social post using natural language processing.
--  Rework the bot so that it sends an embed containing the contents of the post instead of just the link.
+- Rework the bot so that it sends an embed containing the contents of the post instead of just the link.
     - Link
     - Content of the post
     - Attached images or videos
