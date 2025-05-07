@@ -4,6 +4,7 @@ from truthbrush.api import Api
 from dotenv import load_dotenv
 import os
 from random import randint
+import re
 
 load_dotenv("secret.env")
 
@@ -18,6 +19,9 @@ last_post_id = None
 intents = discord.Intents.default()
 intents.message_content = True
 client = discord.Client(intents=intents)
+
+def get_sentiment(content):
+    return "stub"
 
 @client.event
 async def on_ready():
@@ -39,8 +43,11 @@ async def check_for_new_truths():
             if posts:
                 latest_post = posts[0]
                 if latest_post["id"] != last_post_id:
-                    embed = discord.Embed(title = "New Post", url = latest_post["url"], description = latest_post["content"])
+                    sentiment = get_sentiment(re.sub(r'<[^>]+>', '', latest_post["content"]).strip())
+                    embed = discord.Embed(title = "New Post!", url = latest_post["url"], description = re.sub(r'<[^>]+>', '', latest_post["content"]).strip())
                     embed.set_author(name = "Donald J. Trump", url = "https://truthsocial.com/@realDonaldTrump")
+                    embed.add_field(name = "Sentiment Analysis", value = sentiment, inline = False)
+                    embed.add_field(name = "Summary", value = "Buy")
 
                     await channel.send(embed=embed)
 
