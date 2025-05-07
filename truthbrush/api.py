@@ -12,6 +12,7 @@ import logging
 import os
 from dotenv import load_dotenv
 
+
 load_dotenv("secret.env") 
 
 logging.basicConfig(
@@ -356,94 +357,6 @@ class Api:
                 n_output += 1
                 if maximum is not None and n_output >= maximum:
                     return
-
-    # def pull_statuses(
-    #     self,
-    #     username: str,
-    #     replies=False,
-    #     verbose=False,
-    #     created_after: datetime = None,
-    #     since_id=None,
-    #     pinned=False,
-    # ) -> List[dict]:
-    #     """Pull the given user's statuses.
-
-    #     Params:
-    #         created_after : timezone aware datetime object
-    #         since_id : number or string
-
-    #     Returns a list of posts in reverse chronological order,
-    #         or an empty list if not found.
-    #     """
-
-    #     params = {}
-    #     user_id = self.lookup(username)["id"]
-    #     page_counter = 0
-    #     keep_going = True
-    #     while keep_going:
-    #         try:
-    #             url = f"/v1/accounts/{user_id}/statuses"
-    #             if pinned:
-    #                 url += "?pinned=true&with_muted=true"
-    #             elif not replies:
-    #                 url += "?exclude_replies=true"
-    #             if verbose:
-    #                 logger.debug("--------------------------")
-    #                 logger.debug(f"{url} {params}")
-    #             result = self._get(url, params=params)
-    #             page_counter += 1
-    #         except json.JSONDecodeError as e:
-    #             logger.error(f"Unable to pull user #{user_id}'s statuses': {e}")
-    #             break
-    #         except Exception as e:
-    #             logger.error(f"Misc. error while pulling statuses for {user_id}: {e}")
-    #             break
-
-    #         if "error" in result:
-    #             logger.error(
-    #                 f"API returned an error while pulling user #{user_id}'s statuses: {result}"
-    #             )
-    #             break
-
-    #         if len(result) == 0:
-    #             break
-
-    #         if not isinstance(result, list):
-    #             logger.error(f"Result is not a list (it's a {type(result)}): {result}")
-
-    #         posts = sorted(
-    #             result, key=lambda k: k["id"], reverse=True
-    #         )  # reverse chronological order (recent first, older last)
-    #         params["max_id"] = posts[-1][
-    #             "id"
-    #         ]  # when pulling the next page, get posts before this (the oldest)
-
-    #         if verbose:
-    #             logger.debug(f"PAGE: {page_counter}")
-
-    #         if pinned:  # assume single page
-    #             keep_going = False
-
-    #         for post in posts:
-    #             post["_pulled"] = datetime.now().isoformat()
-
-    #             # only keep posts created after the specified date
-    #             # exclude posts created before the specified date
-    #             # since the page is listed in reverse chronology, we don't need any remaining posts on this page either
-    #             post_at = date_parse.parse(post["created_at"]).replace(
-    #                 tzinfo=timezone.utc
-    #             )
-    #             if (created_after and post_at <= created_after) or (
-    #                 since_id and post["id"] <= since_id
-    #             ):
-    #                 keep_going = False  # stop the loop, request no more pages
-    #                 break  # do not yeild this post or remaining (older) posts on this page
-
-    #             if verbose:
-    #                 logger.debug(f"{post['id']} {post['created_at']}")
-
-    #             yield post
-
 
     def pull_statuses(
         self,
