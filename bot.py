@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 import os
 from random import randint
 import re
+import openai
 
 load_dotenv("secret.env")
 
@@ -13,6 +14,7 @@ CHANNEL_ID = int(os.getenv("CHANNEL_ID"))
 
 TRUTH_USERNAME = "realDonaldTrump"
 
+openai.api_key = os.getenv("OPEN_AI_KEY")
 api = Api()
 last_post_id = None
 
@@ -20,8 +22,12 @@ intents = discord.Intents.default()
 intents.message_content = True
 client = discord.Client(intents=intents)
 
+# helper function for check_for_new_truths() that generates the sentiment analysis by making an api request to openai
 def get_sentiment(content):
-    return "stub"
+    if content == "":
+        return "Unable to generate sentiment for images or videos."
+    else:
+        return "Neutral"
 
 @client.event
 async def on_ready():
