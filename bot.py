@@ -28,32 +28,49 @@ def get_sentiment(content):
     if re.sub('[^A-Za-z0-9 ]+', '', content) == "":
         return "Unable to generate sentiment for images or videos, please check the post manually."
     else:
-        response = openai.ChatCompletion.create(
-            model = "gpt-4.1-mini",
-            messages = [
-                {
-                    "role": "system",
-                    "content": (
-                        "You are a financial analyst.\n\n"
-                        "Given a social media post determine how the post might influence market sentiment on the S&P 500.\n"
-                        "- Consider if the post aligns with or opposes recent trends.\n"
-                        "- Use recent news to support your analysis and final decision."
-                        "- If the post is not related to the stock market, economy, companies, or macroeconomic indicators, return Neutral.\n\n"
-                        "Respond with:\n"
-                        "Sentiment: Positive, Neutral, or Negative\n"
-                        "Reason: Short explanation, max 3 sentences"
-                    )
-                },
-                {
-                    "role" : "user",
-                    "content": (content)
-                }
-            ],
+        # response = openai.ChatCompletion.create(
+        #     model = "gpt-4.1",
+        #     messages = [
+        #         {
+        #             "role": "system",
+        #             "content": (
+        #                 "You are a financial analyst.\n\n"
+        #                 "Given a social media post determine how the post might influence market sentiment on the S&P 500.\n"
+        #                 "- Consider if the post aligns with or opposes recent trends.\n"
+        #                 "- Use recent news to support your analysis and final decision."
+        #                 "- If the post is not related to the stock market, economy, companies, or macroeconomic indicators, return Neutral.\n\n"
+        #                 "Respond with:\n"
+        #                 "Sentiment: Positive, Neutral, or Negative\n"
+        #                 "Reason: Short explanation, max 3 sentences"
+        #             )
+        #         },
+        #         {
+        #             "role" : "user",
+        #             "content": (content)
+        #         }
+        #     ],
+        #     temperature = 0.1,
+        #     max_tokens = 120
+        # )
+
+        response = openai.responses.create(
+            model = "gpt-4.1",
+            instructions = 
+            """You are a financial analyst.
+            Given a social media post determine how the post might influence market sentiment on the S&P 500.
+            Consider if the post aligns with or opposes recent trends.
+            Use recent news to support your analysis and final decision.
+            If the post is not related to the stock market, economy, companies, or macroeconomic indicators, return Neutral.
+            Respond with:
+            Positive, Neutral, or Negative
+
+            Short explanation, max 3 sentences""",
+            input = content,
             temperature = 0.1,
-            max_tokens = 120
+            max_output_tokens = 120
         )
 
-        return response.choices[0].message.content.strip()
+        return response.output_text
     
 
 @client.event
@@ -76,7 +93,8 @@ async def check_for_new_truths():
             if posts:
                 latest_post = posts[0]
                 if latest_post["id"] != last_post_id:
-                    sentiment = get_sentiment(re.sub(r'<[^>]+>', '', latest_post["content"]).strip())
+                    content = re.sub(r'<[^>]+>', '', latest_post["content"]).strip()
+                    sentiment = await asyncio.to_thread(get_sentiment, content)
                     embed = discord.Embed(title = "New Post!", url = latest_post["url"], description = re.sub(r'<[^>]+>', '', latest_post["content"]).strip())
                     embed.set_author(name = "Donald J. Trump", url = "https://truthsocial.com/@realDonaldTrump")
                     embed.add_field(name = "Sentiment Analysis", value = sentiment, inline = False)
