@@ -28,31 +28,6 @@ def get_sentiment(content):
     if re.sub('[^A-Za-z0-9 ]+', '', content) == "":
         return "Unable to generate sentiment for images or videos, please check the post manually."
     else:
-        # response = openai.ChatCompletion.create(
-        #     model = "gpt-4.1",
-        #     messages = [
-        #         {
-        #             "role": "system",
-        #             "content": (
-        #                 "You are a financial analyst.\n\n"
-        #                 "Given a social media post determine how the post might influence market sentiment on the S&P 500.\n"
-        #                 "- Consider if the post aligns with or opposes recent trends.\n"
-        #                 "- Use recent news to support your analysis and final decision."
-        #                 "- If the post is not related to the stock market, economy, companies, or macroeconomic indicators, return Neutral.\n\n"
-        #                 "Respond with:\n"
-        #                 "Sentiment: Positive, Neutral, or Negative\n"
-        #                 "Reason: Short explanation, max 3 sentences"
-        #             )
-        #         },
-        #         {
-        #             "role" : "user",
-        #             "content": (content)
-        #         }
-        #     ],
-        #     temperature = 0.1,
-        #     max_tokens = 120
-        # )
-
         response = openai.responses.create(
             model = "gpt-4.1",
             instructions = 
