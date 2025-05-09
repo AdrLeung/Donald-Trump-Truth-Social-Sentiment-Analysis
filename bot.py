@@ -16,6 +16,7 @@ TRUTH_USERNAME = "realDonaldTrump"
 
 openai.api_key = os.getenv("OPENAI_KEY")
 api = Api()
+
 last_post_id = None
 
 intents = discord.Intents.default()
@@ -25,10 +26,36 @@ client = discord.Client(intents=intents)
 # helper function for check_for_new_truths() that generates the sentiment analysis by making an api request to openai
 def get_sentiment(content):
     if re.sub('[^A-Za-z0-9 ]+', '', content) == "":
-        return "Unable to generate sentiment for images or videos."
+        return "Unable to generate sentiment for images or videos, please check the post manually."
     else:
-        return "Neutral"
+        response = openai.ChatCompletion.create(
+            model = "gpt-4.1-mini",
+            messages = [
+                {
+                    "role": "system",
+                    "content": (
+                        "You are a financial analyst.\n\n"
+                        "Given a social media post determine how the post might influence market sentiment on the S&P 500.\n"
+                        "- Consider if the post aligns with or opposes recent trends.\n"
+                        "- Use recent news to support your analysis and final decision."
+                        "- If the post is not related to the stock market, economy, companies, or macroeconomic indicators, return Neutral.\n\n"
+                        "Respond with:\n"
+                        "Sentiment: Positive, Neutral, or Negative\n"
+                        "Reason: Short explanation, max 3 sentences"
+                    )
+                },
+                {
+                    "role" : "user",
+                    "content": (content)
+                }
+            ],
+            temperature = 0.1,
+            max_tokens = 120
+        )
 
+        return response.choices[0].message.content.strip()
+    
+    
 @client.event
 async def on_ready():
     print(f'Logged in as {client.user}')
