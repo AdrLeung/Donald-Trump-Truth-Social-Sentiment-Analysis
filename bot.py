@@ -14,7 +14,7 @@ CHANNEL_ID = int(os.getenv("CHANNEL_ID"))
 
 TRUTH_USERNAME = "realDonaldTrump"
 
-openai.api_key = os.getenv("OPEN_AI_KEY")
+openai.api_key = os.getenv("OPENAI_KEY")
 api = Api()
 last_post_id = None
 
@@ -24,7 +24,7 @@ client = discord.Client(intents=intents)
 
 # helper function for check_for_new_truths() that generates the sentiment analysis by making an api request to openai
 def get_sentiment(content):
-    if content == "":
+    if re.sub('[^A-Za-z0-9 ]+', '', content) == "":
         return "Unable to generate sentiment for images or videos."
     else:
         return "Neutral"
