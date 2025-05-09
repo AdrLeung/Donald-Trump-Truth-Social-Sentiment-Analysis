@@ -55,7 +55,7 @@ def get_sentiment(content):
 
         return response.choices[0].message.content.strip()
     
-    
+
 @client.event
 async def on_ready():
     print(f'Logged in as {client.user}')
@@ -80,7 +80,6 @@ async def check_for_new_truths():
                     embed = discord.Embed(title = "New Post!", url = latest_post["url"], description = re.sub(r'<[^>]+>', '', latest_post["content"]).strip())
                     embed.set_author(name = "Donald J. Trump", url = "https://truthsocial.com/@realDonaldTrump")
                     embed.add_field(name = "Sentiment Analysis", value = sentiment, inline = False)
-                    embed.add_field(name = "Summary", value = "Buy")
 
                     await channel.send(embed=embed)
 
