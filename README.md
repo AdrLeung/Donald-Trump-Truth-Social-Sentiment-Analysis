@@ -29,11 +29,5 @@ I will sell the contract if it loses or gains more than 20% of its premium.
 Will be updated as trades occur.
 
 ## TODO
-- Figure out how I will perform sentiment analysis on a Truth Social post using natural language processing.
-- Rework the bot so that it sends an embed containing the contents of the post instead of just the link.
-    - Link
-    - Content of the post
-    - Attached images or videos
-    - Bot sentiment
-- Fix issue where bot will send the same post twice if I rerun the bot.py file in a short period of time. This is especially relevant because I do not have access to a dedicated server, so when I turn off my computer, the bot stops working.
+- Testing results by making trades according to the above strategy.
 - Reduce delay of between when Donald Trump posts and when my bot sends the message on Discord.
