@@ -41,7 +41,6 @@ def get_sentiment(content):
 
             Short explanation, max 3 sentences""",
             input = content,
-            temperature = 0.1,
             max_output_tokens = 120
         )
 
