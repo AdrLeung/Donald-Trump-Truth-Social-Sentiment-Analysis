@@ -35,9 +35,10 @@ def get_sentiment(content):
             Given a social media post determine how the post might influence market sentiment on the S&P 500.
             Consider if the post aligns with or opposes recent trends.
             Use recent news to support your analysis and final decision.
-            If the post is not related to the stock market, economy, companies, or macroeconomic indicators, return Neutral.
+            If the post is not related to the stock market, economy, companies, or macroeconomic indicators, return with a 5.
+            
             Respond with:
-            Positive, Neutral, or Negative
+            A scale of 1-10 on how positive or negative the sentiment is, with 5 being neutral, 1 being a strong negative sentiment, and 10 being a strong positive sentiment.
 
             Short explanation, max 3 sentences""",
             input = content,
