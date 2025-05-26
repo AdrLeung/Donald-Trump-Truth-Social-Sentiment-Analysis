@@ -30,17 +30,19 @@ def get_sentiment(content):
     else:
         response = openai.responses.create(
             model = "gpt-4.1",
-            instructions = 
-            """You are a financial analyst.
-            Given a social media post determine how the post might influence market sentiment on the S&P 500.
-            Consider if the post aligns with or opposes recent trends.
-            Use recent news to support your analysis and final decision.
-            If the post is not related to the stock market, economy, companies, or macroeconomic indicators, return with a 5.
-            
-            Respond with:
-            A scale of 1-10 on how positive or negative the sentiment is, with 5 being neutral, 1 being a strong negative sentiment, and 10 being a strong positive sentiment.
+            instructions = """
+            You are a financial analyst.
 
-            Short explanation, max 3 sentences""",
+            Given a social media post, evaluate how it may affect market sentiment related to the S&P 500. Consider:
+            - Whether the post aligns with or contradicts recent economic news or market trends.
+            - Whether the post is relevant to the stock market, economy, companies, or macroeconomic indicators.
+
+            If the post is unrelated to financial matters, return a score of 5 (neutral).
+
+            Respond in this format:
+            Score: <1–10>  (1 = very negative, 10 = very positive, 5 = neutral)
+            Reason: <1–3 concise sentences explaining the score>
+            """,
             input = content,
             max_output_tokens = 120
         )
